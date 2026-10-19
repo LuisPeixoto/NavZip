@@ -8,8 +8,8 @@
     "check:repo": "node scripts/check-repository.mjs"
   },
   "devDependencies": {
-    "typescript": "5.9.3",
-    "playwright": "1.56.1"
+    "typescript": "7.0.2",
+    "playwright": "1.64.1"
   },
   "engines": {
     "node": ">=22"
