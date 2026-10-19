@@ -464,6 +464,7 @@ impl Engine {
             .arg(self.out()))
     }
     pub fn package(&self) -> Result<()> {
+        self.verify_revision()?;
         if !self.binary().is_file() {
             bail!("Não existe build Chromium/NavZip; nenhum instalador foi gerado");
         }
@@ -479,6 +480,12 @@ impl Engine {
         fs::create_dir_all(&stage)?;
         #[cfg(target_os = "macos")]
         {
+            let credits = self
+                .out()
+                .join("gen/components/resources/about_credits.html");
+            validate_distribution_credits(&fs::read_to_string(&credits).context(
+                "Missing generated Chromium credits; rebuild with generate_about_credits = true",
+            )?)?;
             if stage.join("NavZip.app").exists() {
                 bail!(
                     "Saída existente: preserve/remova explicitamente dist/chromium/NavZip.app antes de empacotar"
@@ -499,12 +506,29 @@ impl Engine {
                 fs::copy(self.root.join(name), licenses.join(name))?;
             }
             fs::copy(
+                self.source().join("LICENSE"),
+                licenses.join("LICENSE-Chromium"),
+            )?;
+            fs::copy(
+                self.source().join("AUTHORS"),
+                licenses.join("AUTHORS-Chromium"),
+            )?;
+            fs::copy(credits, licenses.join("chromium-credits.html"))?;
+            fs::copy(
                 self.root.join("webui/newtab/icons/LICENSE-lobe-icons"),
                 licenses.join("LICENSE-lobe-icons"),
             )?;
             run(Command::new("codesign")
                 .args(["--force", "--deep", "--sign", "-"])
                 .arg(stage.join("NavZip.app")))?;
+            run(Command::new("codesign")
+                .args(["--verify", "--deep", "--strict"])
+                .arg(stage.join("NavZip.app")))?;
+            let image = self.root.join("dist").join(format!(
+                "NavZip-{}-macos-{}.dmg",
+                env!("CARGO_PKG_VERSION"),
+                std::env::consts::ARCH
+            ));
             run(Command::new("hdiutil")
                 .args([
                     "create",
@@ -515,11 +539,8 @@ impl Engine {
                     "-srcfolder",
                 ])
                 .arg(&stage)
-                .arg(self.root.join("dist").join(format!(
-                    "NavZip-{}-{}.dmg",
-                    self.lock.version,
-                    std::env::consts::ARCH
-                ))))?;
+                .arg(&image))?;
+            run(Command::new("hdiutil").arg("verify").arg(image))?;
             println!("Build experimental ad-hoc, não notarizado");
             Ok(())
         }
@@ -528,6 +549,16 @@ impl Engine {
             bail!("Instaladores Windows/Linux ainda não homologados; use a saída de build nativa");
         }
     }
+}
+#[cfg(any(target_os = "macos", test))]
+fn validate_distribution_credits(credits: &str) -> Result<()> {
+    if credits.len() < 1024
+        || credits.contains("This is sample credits page")
+        || credits.contains("To get correct credits page")
+    {
+        bail!("Chromium credits are a placeholder; rebuild with generate_about_credits = true");
+    }
+    Ok(())
 }
 fn validate_output_name(name: &str) -> Result<()> {
     if name.is_empty()
@@ -582,6 +613,17 @@ fn stop_build(child: &mut Child) {
 #[cfg(test)]
 mod output_tests {
     use super::*;
+    #[test]
+    fn distribution_rejects_empty_and_sample_chromium_credits() {
+        assert!(validate_distribution_credits("").is_err());
+        let placeholder = format!("This is sample credits page.{}", " ".repeat(2048));
+        assert!(validate_distribution_credits(&placeholder).is_err());
+        let generated = format!(
+            "<html>The Chromium Project{}BSD-3-Clause</html>",
+            " ".repeat(2048)
+        );
+        assert!(validate_distribution_credits(&generated).is_ok());
+    }
     #[test]
     fn output_names_stay_inside_the_checkout_and_support_separate_builds() {
         for name in ["NavZip", "NavZipRelease", "release-arm64"] {

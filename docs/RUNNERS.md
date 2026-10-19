@@ -2,6 +2,14 @@
 
 Full Chromium builds require trusted, dedicated hosts. No runners are currently registered for this repository; hosted source CI is not a replacement for native browser builds.
 
+## When no native hosts are available
+
+As checked on October 19, 2026, GitHub documents **14 GB SSD storage** for standard public Linux, Windows and macOS runners. Chromium's upstream [Linux](https://chromium.googlesource.com/chromium/src/+/main/docs/linux/build_instructions.md) and [Windows](https://chromium.googlesource.com/chromium/src/+/main/docs/windows_build_instructions.md) instructions call for at least **100 GB free disk space**. The standard hosted configuration does not meet that requirement. See [GitHub's runner specifications](https://docs.github.com/en/actions/reference/runners/github-hosted-runners) for current limits.
+
+Source checks and source previews can run there. Full browser builds need a sufficiently provisioned host or an explicitly authorized paid build environment. Larger GitHub runners have additional plan and billing requirements; they are not provisioned by this repository's workflows. Do not dispatch unavailable self-hosted targets or describe their queued jobs as builds in progress.
+
+The maintainer's macOS Intel workstation can build locally with `cargo xtask build --release`, without registering it as a persistent GitHub runner. This does not provide Windows, Linux or Apple Silicon qualification. No installer for those targets is published until the corresponding build and packaging checks actually pass.
+
 ## Target labels
 
 | Host | Required labels |

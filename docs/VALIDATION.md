@@ -6,7 +6,7 @@
 
 | Layer | Result | Boundary |
 | --- | --- | --- |
-| Rust workspace | 24 tests passed; Clippy with `-D warnings`; formatting passed | Tooling, migration and plugin components, not the engine |
+| Rust workspace | 25 tests passed; Clippy with `-D warnings`; formatting passed | Tooling, migration and plugin components, not the engine |
 | WebUI component | Strict TypeScript and Playwright checks passed | Test-only bridge in an installed browser |
 | Chromium patch | Checked against the pinned upstream context | Does not establish compilation |
 | Native build | Full development browser built on macOS Intel | Component build depends on checkout libraries |
@@ -72,3 +72,5 @@ Historical Servo logs and concept artwork do not validate this browser. See [rel
 Three additional Rust tests cover exact version/tag validation, clean-tree and conflicting-tag rejection, non-overwriting output, source archive generation and SHA-256 manifest verification. Prepared archives explicitly contain source, not platform installers. The source-publication workflow stages and publishes source-only prereleases only after required checks pass on its exact commit.
 
 Separate output-directory validation is also tested. `NAVZIP_CHROMIUM_OUT=NavZipRelease` isolates distribution builds from the working development app; traversal and absolute output names are rejected. Native browser validation must be repeated for the new build before packaging.
+
+The distribution credits guard rejects missing or sample Chromium credits before staging an application. Release configuration enables full generated credits; the macOS packager preserves upstream notices and verifies the ad-hoc signature and DMG. A complete standalone build and packaged-app qualification remain pending.
