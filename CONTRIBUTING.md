@@ -32,7 +32,7 @@ External contributors should fork the repository and open a pull request from th
 
 - Use **English** for documentation, code comments, commit subjects, issues and pull requests. User-visible strings may be localized; do not translate unrelated UI as part of a docs change.
 - Use focused branches from `main`, such as `feat/shortcut-editing`, `fix/tab-focus` or `docs/linux-build`. Automated work may use `codex/` branches.
-- Use Conventional Commit-style subjects: `feat:`, `fix:`, `docs:`, `test:`, `ci:`, `refactor:` or `chore:`; a useful scope is welcome.
+- Use Conventional Commit-style subjects: `feat:`, `fix:`, `docs:`, `test:`, `ci:`, `build:`, `refactor:` or `chore:`; a useful scope is welcome.
 - Keep independent changes in separate commits. Describe final behavior, not the chat or abandoned approaches.
 - Rust is preferred for supporting tools where practical; browser-native integration follows Chromium's C++/Views and Mojo conventions.
 - Respect existing platform behavior, accessibility, profile boundaries and unrelated local changes.
@@ -58,6 +58,8 @@ npm run test:native
 ```
 
 Report what actually ran. Source CI, component tests, compiled C++ test objects and native integration tests prove different things. Do not claim C++ tests executed if only their objects were compiled. Do not claim Windows/Linux browser support from hosted Rust CI.
+
+CI also lints workflow syntax with a checksum-pinned actionlint binary. The custom native-runner label is declared in `.github/actionlint.yaml`.
 
 ## Pull request checklist
 

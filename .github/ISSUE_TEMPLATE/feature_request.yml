@@ -1,0 +1,24 @@
+name: Feature proposal
+description: Explain a user problem and a focused improvement.
+title: 'feature: '
+labels: [enhancement, needs-triage]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem should NavZip solve?
+      description: Describe the user and a concrete situation.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Include alternatives and accessibility/privacy implications where relevant.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: References or evidence
+      description: Link relevant issues, upstream work or non-sensitive examples.
