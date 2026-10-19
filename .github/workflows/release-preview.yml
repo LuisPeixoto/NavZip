@@ -54,8 +54,16 @@ jobs:
         if: steps.availability.outputs.create == 'true'
         run: |
           source_commit=$(git rev-parse HEAD)
-          result=$(gh api "repos/$GH_REPO/commits/$source_commit/check-runs" --jq '[.check_runs[] | select(.name == "Required checks" and .app.id == 15368 and .conclusion == "success")] | length')
-          test "$result" -gt 0
+          for attempt in $(seq 1 30); do
+            result=$(gh api "repos/$GH_REPO/commits/$source_commit/check-runs" --jq '[.check_runs[] | select(.name == "Required checks" and .app.id == 15368 and .conclusion == "success")] | length' 2>/dev/null || printf '0')
+            if test "$result" -gt 0 2>/dev/null; then
+              exit 0
+            fi
+            echo "Waiting for successful check-run indexing on $source_commit ($attempt/30)."
+            sleep 10
+          done
+          echo "Required checks were not confirmed; no release will be published."
+          exit 1
       - if: steps.availability.outputs.create == 'true'
         uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
         with:
