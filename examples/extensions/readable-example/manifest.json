@@ -1,0 +1,1 @@
+{"manifest_version":1,"id":"readable-example","name":"Leitura confortável","version":"1.0.0","description":"Ajusta a tipografia de example.org após carregar a página.","permissions":["content.scripts"],"origins":["https://example.org/*"],"module":null,"theme":null,"scripts":[{"matches":["https://example.org/*"],"js":"reader.js","css":"reader.css"}]}

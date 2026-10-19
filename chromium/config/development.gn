@@ -1,0 +1,10 @@
+is_debug = false
+is_component_build = true
+is_official_build = false
+is_chrome_branded = false
+symbol_level = 0
+blink_symbol_level = 0
+v8_symbol_level = 0
+use_remoteexec = false
+chrome_pgo_phase = 0
+optimize_webui = false

@@ -1,0 +1,495 @@
+:root {
+  color-scheme: dark;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  color: #f4f2ed;
+  background: #101517;
+  --muted: #aab0b6;
+  --mint: #8cdbb6;
+  --border: #41474d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100dvh;
+  font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(ellipse at 50% 42%,#1a2023 0%,#12181b 48%,#0f1517 100%);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: .45;
+  cursor: wait;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--mint);
+  outline-offset: 5px;
+}
+
+svg {
+  width: 24px;
+  height: 24px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.hero {
+  position: absolute;
+  left: 50%;
+  top: 51%;
+  transform: translate(-50%,-50%);
+  width: min(874px,calc(100% - 72px));
+  text-align: center;
+}
+
+.clock {
+  font-size: clamp(76px,8vw,128px);
+  line-height: 1.05;
+  font-weight: 200;
+  letter-spacing: -6px;
+  display: block;
+  margin-bottom: 36px;
+  font-variant-numeric: tabular-nums;
+}
+
+.search {
+  height: 78px;
+  border: 1px solid #454e52;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  gap: 23px;
+  padding: 0 34px;
+  background: linear-gradient(120deg,#20272bdb,#20262ace);
+  box-shadow: inset 0 0 0 1px #ffffff03;
+}
+
+.search svg {
+  width: 25px;
+  flex-shrink: 0;
+}
+
+.search input {
+  border: 0;
+  outline: none;
+  background: none;
+  color: #f4f2ed;
+  min-width: 0;
+  flex: 1;
+  font-size: 21px;
+}
+
+.search input::placeholder {
+  color: #aeb3ba;
+}
+
+.search:focus-within {
+  border-color: var(--mint);
+  box-shadow: 0 0 0 2px #8cdbb614;
+}
+
+.search input:focus-visible {
+  outline: 0;
+}
+
+.search kbd {
+  font-family: inherit;
+  font-size: 16px;
+  border: 1px solid #3d444a;
+  border-radius: 11px;
+  padding: 5px 11px;
+  white-space: nowrap;
+  color: #dedfe2;
+  position: relative;
+}
+
+.search kbd::before {
+  content: '';
+  height: 27px;
+  border-left: 1px solid #535960;
+  position: absolute;
+  left: -18px;
+  top: 3px;
+}
+
+.shortcuts {
+  display: flex;
+  gap: 46px;
+  justify-content: center;
+  margin-top: 44px;
+  flex-wrap: wrap;
+}
+
+.shortcut {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  color: #f4f2ed;
+  text-decoration: none;
+  font-size: 16px;
+  background: transparent;
+  padding: 0;
+}
+
+.shortcut-icon {
+  width: 92px;
+  height: 92px;
+  border: 1px solid #293236;
+  border-radius: 16px;
+  background: linear-gradient(135deg,#21292d,#1b2226);
+  display: grid;
+  place-items: center;
+  transition: background .13s,border-color .13s,transform .13s;
+}
+
+.shortcut-icon img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.shortcut-icon svg {
+  width: 32px;
+  height: 32px;
+  stroke-width: 1.3;
+}
+
+.shortcut:hover .shortcut-icon {
+  background: #303a3d;
+  border-color: #63726b;
+  transform: translateY(-2px);
+}
+
+.footer {
+  position: fixed;
+  bottom: 32px;
+  left: 36px;
+  right: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #f0f2f1;
+  font-size: 16px;
+}
+
+.signature {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+}
+
+.brand {
+  width: 28px;
+  height: 28px;
+}
+
+.customize {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 10px 0 10px 14px;
+  background: none;
+  color: #f0f1f2;
+  font-size: 15px;
+}
+
+.customize:hover {
+  color: var(--mint);
+}
+
+.status {
+  position: fixed;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  color: var(--mint);
+  font-size: 13px;
+  pointer-events: none;
+}
+
+dialog {
+  color: inherit;
+  background: #22282c;
+  border: 1px solid #454e54;
+  border-radius: 20px;
+  max-width: calc(100vw - 32px);
+  width: 460px;
+  padding: 28px;
+  box-shadow: 0 25px 90px #0008;
+}
+
+dialog::backdrop {
+  background: #080c10a8;
+  backdrop-filter: blur(7px);
+}
+
+dialog h1 {
+  font-size: 23px;
+  font-weight: 500;
+  margin: 0 0 24px;
+}
+
+dialog label {
+  display: block;
+  font-size: 14px;
+  color: #d0d6d9;
+  margin: 17px 0 7px;
+}
+
+dialog input[type=text],
+dialog input[type=url] {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 10px;
+  border: 1px solid #495158;
+  color: #f5f6f7;
+  background: #1b2125;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 25px;
+}
+
+dialog button {
+  border-radius: 10px;
+  padding: 10px 15px;
+  background: #35403e;
+}
+
+dialog button.primary {
+  background: var(--mint);
+  color: #13231c;
+}
+
+dialog button.ghost {
+  background: #31383e;
+}
+
+.layout-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.error {
+  color: #ffabab;
+  font-size: 13px;
+  min-height: 18px;
+}
+
+.shortcut-settings {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  align-items: center;
+}
+
+.shortcut-settings span {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.shortcut-settings button {
+  padding: 6px 10px;
+  background: #30383b;
+}
+
+.shortcut-settings button:hover {
+  color: var(--mint);
+}
+
+:root[data-color-scheme='light'] {
+  color-scheme: light;
+  color: #1c2924;
+  background: #f4f7f5;
+  --muted: #54665d;
+  --mint: #16694a;
+  --border: #c6d2cb;
+}
+
+:root[data-color-scheme='light'] body {
+  background: radial-gradient(ellipse at 50% 42%,#fff 0%,#f4f7f5 60%,#edf3ef 100%);
+}
+
+:root[data-color-scheme='light'] .search,
+:root[data-color-scheme='light'] .shortcut-icon {
+  background: linear-gradient(135deg,#fff,#f1f6f3);
+  border-color: var(--border);
+}
+
+:root[data-color-scheme='light'] .search input,
+:root[data-color-scheme='light'] .shortcut,
+:root[data-color-scheme='light'] .footer,
+:root[data-color-scheme='light'] .customize,
+:root[data-color-scheme='light'] dialog input {
+  color: #1c2924;
+}
+
+:root[data-color-scheme='light'] .search input::placeholder,
+:root[data-color-scheme='light'] .search kbd,
+:root[data-color-scheme='light'] dialog label {
+  color: var(--muted);
+}
+
+:root[data-color-scheme='light'] .search kbd,
+:root[data-color-scheme='light'] .search kbd::before,
+:root[data-color-scheme='light'] dialog,
+:root[data-color-scheme='light'] dialog input {
+  border-color: var(--border);
+}
+
+:root[data-color-scheme='light'] .shortcut:hover .shortcut-icon,
+:root[data-color-scheme='light'] dialog button,
+:root[data-color-scheme='light'] dialog button.ghost,
+:root[data-color-scheme='light'] .shortcut-settings button {
+  background: #e0ece4;
+}
+
+:root[data-color-scheme='light'] .shortcut-icon img[src$='github.svg'],
+:root[data-color-scheme='light'] .shortcut-icon img[src$='chatgpt.svg'] {
+  filter: brightness(0) saturate(100%);
+}
+
+:root[data-color-scheme='light'] dialog,
+:root[data-color-scheme='light'] dialog input {
+  background: #fff;
+}
+
+:root[data-color-scheme='light'] dialog button.primary {
+  background: var(--mint);
+  color: #fff;
+}
+
+:root[data-color-scheme='light'] .error {
+  color: #a12b2b;
+}
+
+@media(max-width: 850px) {
+
+  .hero {
+    top: 48.5%;
+    width: calc(100% - 76px);
+  }
+
+  .clock {
+    font-size: 112px;
+  }
+
+  .search {
+    height: 58px;
+    padding: 0 23px;
+    border-radius: 25px;
+  }
+
+  .search input {
+    font-size: 16px;
+  }
+
+  .shortcuts {
+    gap: 34px;
+  }
+
+  .shortcuts:has(>.shortcut:nth-child(6)) {
+    column-gap: 12px;
+  }
+
+  .shortcut-icon {
+    width: 78px;
+    height: 78px;
+  }
+
+  .signature {
+    visibility: hidden;
+  }
+}
+
+@media(max-width: 540px) {
+
+  .hero {
+    width: calc(100% - 40px);
+    top: 45%;
+  }
+
+  .clock {
+    font-size: 85px;
+    letter-spacing: -4px;
+  }
+
+  .shortcuts {
+    gap: 22px;
+  }
+
+  .shortcut-icon {
+    width: 64px;
+    height: 64px;
+  }
+
+  .shortcut-icon img {
+    width: 33px;
+    height: 33px;
+  }
+
+  .shortcut {
+    font-size: 13px;
+  }
+
+  .search kbd {
+    display: none;
+  }
+
+  .search {
+    gap: 14px;
+  }
+
+  .footer {
+    left: 20px;
+    right: 20px;
+    bottom: 15px;
+  }
+
+}
+
+@media(prefers-reduced-motion: reduce) {
+
+  *,
+*::before,
+*::after {
+    transition: none!important;
+    animation: none!important;
+  }
+}

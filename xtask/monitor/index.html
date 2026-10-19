@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>NavZip · Acompanhamento ao vivo</title>
+  <link rel="icon" href="/logo.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header>
+      <div class="brand"><img src="/logo.svg" width="32" height="32" alt=""><span>NavZip</span><span class="subtitle">compilação</span></div>
+      <span id="connection" class="connection">Conectando…</span>
+    </header>
+    <section class="overview" aria-labelledby="phase">
+      <div class="eyebrow">ACOMPANHAMENTO EM TEMPO REAL</div>
+      <h1 id="phase" aria-live="polite">Lendo o build…</h1>
+      <p id="context" class="muted">Aguardando os dados da compilação.</p>
+      <div class="stats">
+        <div><div class="muted">Etapas concluídas</div><strong id="completed">—</strong></div>
+        <div><div class="muted">Etapas restantes</div><strong id="remaining">—</strong></div>
+        <div><div class="muted">Tempo desta execução</div><strong id="elapsed">—</strong></div>
+      </div>
+      <div class="progress-label"><span id="ratio">Aguardando contagem</span><span id="percent">—</span></div>
+      <progress id="progress" aria-label="Etapas desta retomada" max="100"></progress>
+      <p class="hint">O total pode mudar conforme arquivos são reaproveitados. A barra representa etapas desta retomada, sem previsão de tempo restante.</p>
+      <div id="error" class="error" role="alert" hidden></div>
+      <ol class="stages" aria-label="Etapas da entrega">
+        <li id="build-stage"><span class="stage-dot"></span><span>Compilação</span><small id="build-stage-state">Aguardando</small></li>
+        <li id="test-stage"><span class="stage-dot"></span><span>Testes nativos</span><small id="test-stage-state">Aguardando o build</small></li>
+      </ol>
+    </section>
+    <section class="logs" aria-labelledby="log-heading">
+      <div class="log-header"><h2 id="log-heading">Atividade ao vivo</h2><span id="updated" class="muted">—</span></div>
+      <pre id="log" aria-label="Últimas linhas do log">Lendo os logs…</pre>
+    </section>
+    <footer><span id="disk">—</span><span>Atualização automática a cada 2 s · somente leitura</span></footer>
+    <p class="release-note">Este painel acompanha a construção. A revisão visual e a homologação do navegador continuam pendentes.</p>
+  </main>
+</body>
+</html>

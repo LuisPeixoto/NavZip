@@ -1,0 +1,10 @@
+{
+  "version": "155.0.8059.80",
+  "revision": "43a195105613ac83c21d3f14de279f4a045c7da0",
+  "repository": "https://chromium.googlesource.com/chromium/src.git",
+  "source_mirror": "https://github.com/chromium/chromium.git",
+  "depot_tools": "https://chromium.googlesource.com/chromium/tools/depot_tools.git",
+  "depot_revision": "251c84c1f36498529399517014e8f7994f762e2e",
+  "product": "NavZip",
+  "bundle_id": "org.navzip.browser"
+}
