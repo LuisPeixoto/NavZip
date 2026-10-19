@@ -10,8 +10,8 @@ serde.workspace = true
 serde_json.workspace = true
 url.workspace = true
 uuid.workspace = true
-rusqlite = { version = "0.38", features = ["bundled", "backup"] }
-sha2 = "0.10"
+rusqlite = { version = "0.40", features = ["bundled", "backup"] }
+sha2 = "0.11"
 navzip-extensions = { path = "../navzip-extensions" }
 
 [dev-dependencies]
