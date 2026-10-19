@@ -14,8 +14,12 @@ anyhow.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 fs2 = "0.4"
+sha2 = "0.10"
 image = { version = "0.25", default-features = false, features = ["png"] }
 
 [target.'cfg(unix)'.dependencies]
 libc = "0.2"
+
+[dev-dependencies]
+tempfile.workspace = true
 

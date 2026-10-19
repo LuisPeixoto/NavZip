@@ -6,7 +6,7 @@
 
 | Layer | Result | Boundary |
 | --- | --- | --- |
-| Rust workspace | 20 tests passed; Clippy with `-D warnings`; formatting passed | Tooling, migration and plugin components, not the engine |
+| Rust workspace | 23 tests passed; Clippy with `-D warnings`; formatting passed | Tooling, migration and plugin components, not the engine |
 | WebUI component | Strict TypeScript and Playwright checks passed | Test-only bridge in an installed browser |
 | Chromium patch | Checked against the pinned upstream context | Does not establish compilation |
 | Native build | Full development browser built on macOS Intel | Component build depends on checkout libraries |
@@ -66,3 +66,7 @@ The user's normal profile was reopened after the new-tab simplification, preserv
 Native Windows/Linux/ARM64 browsers; production installers and updates; real-account Gmail/Docs/GitHub/Jira/Confluence/WhatsApp flows; broad extension compatibility; print UI; complete password/autofill flows; migration crash recovery; accessibility audits; platform isolation/security review; private-session crash cleanup; and reproducible performance comparisons.
 
 Historical Servo logs and concept artwork do not validate this browser. See [release gates](RELEASE.md) before describing a build as ready for primary use.
+
+## Source-preview preparation
+
+Three additional Rust tests cover exact version/tag validation, clean-tree and conflicting-tag rejection, non-overwriting output, source archive generation and SHA-256 manifest verification. Prepared archives explicitly contain source, not platform installers. The source-publication workflow stages and publishes source-only prereleases only after required checks pass on its exact commit.

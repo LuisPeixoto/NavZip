@@ -23,6 +23,8 @@ A practical guide to the project, from your first checkout to release qualificat
 - [Validation](VALIDATION.md) — measured results and what they do not establish.
 - [Release gates](RELEASE.md) — requirements before a public stable build.
 - [Roadmap](ROADMAP.md) — milestones without speculative delivery dates.
+- [Releasing](RELEASING.md) — source previews, manifests and native artifact requirements.
+- [Native runners](RUNNERS.md) — platform labels and trusted build hosts.
 - [Distribution](../packaging/README.md) — packaging capabilities and limitations.
 
 ## Collaborate

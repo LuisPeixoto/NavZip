@@ -20,6 +20,10 @@ Notable changes are recorded here. Versions and dates describe source milestones
 - Tab favicons align with titles, and internal favicons use transparent masks.
 - Settings and localized product text use NavZip identity while upstream attribution is retained.
 
+### Security
+
+- Upgrade the experimental Wasm worker to wasmi 0.47.2, fixing GHSA-g4v2-cjqp-rfmq without changing the permission boundary.
+
 ### Removed
 
 - Servo/egui application, old installers and unused parallel browser-state/platform crates.
