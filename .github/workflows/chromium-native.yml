@@ -1,0 +1,52 @@
+name: Chromium native build
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: navzip-native-${{ github.ref }}
+  cancel-in-progress: false
+# Dedicated, trusted runners only. Never run fork/PR code on these hosts.
+jobs:
+  chromium:
+    if: github.repository == 'LuisPeixoto/NavZip' && github.ref == 'refs/heads/main'
+    name: Browser (${{ matrix.platform }}, ${{ matrix.arch }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - platform: macos
+            arch: x64
+          - platform: macos
+            arch: arm64
+          - platform: windows
+            arch: x64
+          - platform: linux
+            arch: x64
+    runs-on: [self-hosted, navzip-chromium, '${{ matrix.platform }}', '${{ matrix.arch }}']
+    timeout-minutes: 1440
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
+        with:
+          toolchain: 1.99.1
+      - run: cargo xtask doctor
+      - run: cargo xtask fetch
+      - run: cargo xtask build --release
+      - run: cargo xtask check
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run test:native
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: native-evidence-${{ matrix.platform }}-${{ matrix.arch }}
+          path: dist/qa-chromium/native
+          if-no-files-found: ignore
+          retention-days: 14
+# Packaging, signatures and release publication remain separate release gates.
