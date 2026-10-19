@@ -21,6 +21,7 @@ pub struct Engine {
     checkout: PathBuf,
     tools: PathBuf,
     lock: Lock,
+    output_name: String,
 }
 pub fn run(command: &mut Command) -> Result<()> {
     let program = command.get_program().to_string_lossy().into_owned();
@@ -44,18 +45,25 @@ impl Engine {
             root.join(checkout)
         };
         let tools = root.join(".cache/depot_tools");
+        let output_name = match std::env::var("NAVZIP_CHROMIUM_OUT") {
+            Ok(name) => name,
+            Err(std::env::VarError::NotPresent) => "NavZip".into(),
+            Err(error) => return Err(error.into()),
+        };
+        validate_output_name(&output_name)?;
         Ok(Self {
             root,
             checkout,
             tools,
             lock,
+            output_name,
         })
     }
     fn source(&self) -> PathBuf {
         self.checkout.join("src")
     }
     fn out(&self) -> PathBuf {
-        self.source().join("out/NavZip")
+        self.source().join("out").join(&self.output_name)
     }
     fn command(&self, program: &str) -> Result<Command> {
         let exe = if cfg!(windows) && self.tools.join(format!("{program}.bat")).exists() {
@@ -337,11 +345,12 @@ impl Engine {
             }))?,
         )?;
         if arguments_changed || !self.out().join("build.ninja").is_file() {
-            run(self.command("gn")?.current_dir(self.source()).args([
-                "gen",
-                "out/NavZip",
-                "--fail-on-unused-args",
-            ]))?;
+            run(self
+                .command("gn")?
+                .current_dir(self.source())
+                .arg("gen")
+                .arg(self.out())
+                .arg("--fail-on-unused-args"))?;
         }
         // Otherwise autoninja performs GN's normal dependency checks and
         // regenerates the manifest when BUILD.gn or other GN inputs change.
@@ -361,7 +370,9 @@ impl Engine {
         let mut build = self.command("autoninja")?;
         build
             .current_dir(self.source())
-            .args(["-C", "out/NavZip", "-j", &jobs.to_string()]);
+            .arg("-C")
+            .arg(self.out())
+            .args(["-j", &jobs.to_string()]);
         if integration {
             let extension = if cfg!(windows) { "obj" } else { "o" };
             for target in [
@@ -449,7 +460,8 @@ impl Engine {
         run(self
             .command("gn")?
             .current_dir(self.source())
-            .args(["check", "out/NavZip"]))
+            .arg("check")
+            .arg(self.out()))
     }
     pub fn package(&self) -> Result<()> {
         if !self.binary().is_file() {
@@ -517,6 +529,18 @@ impl Engine {
         }
     }
 }
+fn validate_output_name(name: &str) -> Result<()> {
+    if name.is_empty()
+        || name.len() > 64
+        || !name
+            .bytes()
+            .all(|c| c.is_ascii_alphanumeric() || c == b'-' || c == b'_')
+    {
+        bail!("NAVZIP_CHROMIUM_OUT must be a simple directory name inside Chromium's out/");
+    }
+    Ok(())
+}
+
 fn copy_tree(source: &Path, destination: &Path) -> Result<()> {
     fs::create_dir_all(destination)?;
     for entry in fs::read_dir(source)? {
@@ -553,4 +577,26 @@ fn stop_build(child: &mut Child) {
         .status();
     let _ = child.kill();
     let _ = child.wait();
+}
+
+#[cfg(test)]
+mod output_tests {
+    use super::*;
+    #[test]
+    fn output_names_stay_inside_the_checkout_and_support_separate_builds() {
+        for name in ["NavZip", "NavZipRelease", "release-arm64"] {
+            assert!(validate_output_name(name).is_ok());
+        }
+        for name in [
+            "",
+            "../NavZip",
+            "/tmp/elsewhere",
+            "C:\\elsewhere",
+            "out/name",
+            ".",
+            "..",
+        ] {
+            assert!(validate_output_name(name).is_err());
+        }
+    }
 }

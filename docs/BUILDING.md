@@ -43,6 +43,7 @@ The default source root is `.cache/chromium/src`; development output is `out/Nav
 | Variable | Purpose |
 | --- | --- |
 | `NAVZIP_CHROMIUM_ROOT` | Directory containing Chromium's `src/` checkout |
+| `NAVZIP_CHROMIUM_OUT` | Simple output-directory name under `src/out/`; default `NavZip`. Use `NavZipRelease` to isolate a distribution build |
 | `NAVZIP_PYTHON` | Python executable used by development tooling |
 | `NAVZIP_BUILD_JOBS` | Local build parallelism; defaults to 6 |
 | `DEVELOPER_DIR` | Xcode developer directory on macOS |
@@ -107,6 +108,17 @@ On macOS, a build redirected to `.cache/chromium-native-build.log` can be follow
 cargo xtask build --release
 cargo xtask package
 ```
+
+To preserve a working development app, select a separate output directory for every release command:
+
+```sh
+NAVZIP_CHROMIUM_OUT=NavZipRelease cargo xtask build --release
+NAVZIP_CHROMIUM_OUT=NavZipRelease cargo xtask check
+NAVZIP_CHROMIUM_OUT=NavZipRelease npm run test:native
+NAVZIP_CHROMIUM_OUT=NavZipRelease cargo xtask package
+```
+
+The same variable must be retained by the monitor/test/package commands. Output names are restricted to simple directory names under Chromium's `out/`.
 
 The default component build depends on libraries outside the app bundle. Packaging refuses it. Current macOS packaging requires a non-component build and produces an experimental ad-hoc DMG under `dist/chromium/`; production signing and notarization are not configured. Windows/Linux installers and signed updates remain pending.
 
