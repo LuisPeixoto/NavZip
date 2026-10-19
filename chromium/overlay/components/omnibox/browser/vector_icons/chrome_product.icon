@@ -1,0 +1,7 @@
+// NavZip product mark. MPL-2.0.
+CANVAS_DIMENSIONS, 32,
+STROKE, 5,
+MOVE_TO, 5, 25,
+LINE_TO, 13, 7,
+LINE_TO, 19, 25,
+LINE_TO, 27, 7,
