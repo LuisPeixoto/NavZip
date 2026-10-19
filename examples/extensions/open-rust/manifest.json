@@ -1,0 +1,1 @@
+{"manifest_version":1,"id":"open-rust","name":"Descobrir Rust","version":"1.0.0","description":"Abre o site oficial de Rust em uma nova aba.","permissions":["commands","tabs.create"],"origins":[],"module":"command.wasm","theme":null,"scripts":[]}

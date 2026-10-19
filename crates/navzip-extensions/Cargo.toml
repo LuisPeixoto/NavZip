@@ -1,0 +1,18 @@
+[package]
+name = "navzip-extensions"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+url.workspace = true
+tempfile.workspace = true
+wasmi = "0.46"
+zip = { version = "9.0.4", default-features = false, features = ["deflate"] }
+
+[dev-dependencies]
+wat = "1"
+

@@ -1,0 +1,20 @@
+[package]
+name = "navzip-helper"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+anyhow.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+url.workspace = true
+uuid.workspace = true
+rusqlite = { version = "0.38", features = ["bundled", "backup"] }
+sha2 = "0.10"
+navzip-extensions = { path = "../navzip-extensions" }
+
+[dev-dependencies]
+tempfile.workspace = true
+wat = "1"
+
