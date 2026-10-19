@@ -1,0 +1,11 @@
+/target/
+**/target/
+/.cache/
+/dist/
+*.db
+*.db-shm
+*.db-wal
+.DS_Store
+*.profraw
+/node_modules/
+
