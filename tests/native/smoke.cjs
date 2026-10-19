@@ -10,7 +10,7 @@ const {spawn, spawnSync} = require('node:child_process');
 const {chromium} = require('playwright');
 const root = path.resolve(__dirname, '../..');
 const source = path.resolve(process.env.NAVZIP_CHROMIUM_ROOT || path.join(root, '.cache/chromium'), 'src');
-const binary = process.env.NAVZIP_NATIVE_BINARY || path.join(source, 'out/NavZip',
+const binary = process.env.NAVZIP_NATIVE_BINARY || path.join(source, 'out', process.env.NAVZIP_CHROMIUM_OUT || 'NavZip',
   process.platform === 'darwin' ? 'NavZip.app/Contents/MacOS/NavZip' : process.platform === 'win32' ? 'chrome.exe' : 'chrome');
 const output = path.join(root, 'dist/qa-chromium/native');
 const reportPath = path.join(output, 'report.json');

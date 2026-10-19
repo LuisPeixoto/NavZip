@@ -30,7 +30,7 @@ pub fn wait_and_test(pid: u32, root: &Path, binary: &Path) -> Result<()> {
     let args = String::from_utf8(args.stdout)?;
     let args = args.trim();
     let absolute = root.join("target/debug/xtask");
-    if !args.ends_with("xtask build")
+    if !(args.ends_with("xtask build") || args.ends_with("xtask build --release"))
         || !(args.starts_with("target/debug/xtask ")
             || args.starts_with(&format!("{} ", absolute.display())))
     {
