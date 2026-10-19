@@ -541,28 +541,6 @@ fn validate_output_name(name: &str) -> Result<()> {
     Ok(())
 }
 
-#[cfg(test)]
-mod output_tests {
-    use super::*;
-    #[test]
-    fn output_names_stay_inside_the_checkout_and_support_separate_builds() {
-        for name in ["NavZip", "NavZipRelease", "release-arm64"] {
-            assert!(validate_output_name(name).is_ok());
-        }
-        for name in [
-            "",
-            "../NavZip",
-            "/tmp/elsewhere",
-            "C:\\elsewhere",
-            "out/name",
-            ".",
-            "..",
-        ] {
-            assert!(validate_output_name(name).is_err());
-        }
-    }
-}
-
 fn copy_tree(source: &Path, destination: &Path) -> Result<()> {
     fs::create_dir_all(destination)?;
     for entry in fs::read_dir(source)? {
@@ -599,4 +577,26 @@ fn stop_build(child: &mut Child) {
         .status();
     let _ = child.kill();
     let _ = child.wait();
+}
+
+#[cfg(test)]
+mod output_tests {
+    use super::*;
+    #[test]
+    fn output_names_stay_inside_the_checkout_and_support_separate_builds() {
+        for name in ["NavZip", "NavZipRelease", "release-arm64"] {
+            assert!(validate_output_name(name).is_ok());
+        }
+        for name in [
+            "",
+            "../NavZip",
+            "/tmp/elsewhere",
+            "C:\\elsewhere",
+            "out/name",
+            ".",
+            "..",
+        ] {
+            assert!(validate_output_name(name).is_err());
+        }
+    }
 }
