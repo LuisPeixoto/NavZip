@@ -69,4 +69,4 @@ Historical Servo logs and concept artwork do not validate this browser. See [rel
 
 ## Source-preview preparation
 
-Three additional Rust tests cover exact version/tag validation, clean-tree and conflicting-tag rejection, non-overwriting output, source archive generation and SHA-256 manifest verification. Prepared archives explicitly contain source, not platform installers. The source-publication workflow creates a draft only after required checks pass on its exact commit.
+Three additional Rust tests cover exact version/tag validation, clean-tree and conflicting-tag rejection, non-overwriting output, source archive generation and SHA-256 manifest verification. Prepared archives explicitly contain source, not platform installers. The source-publication workflow stages and publishes source-only prereleases only after required checks pass on its exact commit.

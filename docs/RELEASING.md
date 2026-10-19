@@ -4,7 +4,7 @@ NavZip uses a single version per release, with platform assets attached only whe
 
 ## Source previews
 
-The **Source preview release** workflow can be dispatched on `main` after required checks pass on that exact commit. It prepares a **draft prerelease** with source ZIP/TAR.GZ archives, SHA-256 checksums and a manifest. A maintainer reviews the draft and explicitly publishes it as a source-only preview.
+The **Source preview release** workflow runs after successful main-branch source checks, or can be dispatched manually on `main`. It verifies required checks on the exact checked-out commit, stages a draft with source ZIP/TAR.GZ archives, SHA-256 checksums and a manifest, confirms four uploaded assets, then publishes it as a **source-only prerelease**. An existing version is skipped rather than overwritten. The automated path accepts only successful push checks from this repository on `main`, never untrusted pull-request/fork runs.
 
 The input tag must match Cargo's version, currently `v0.2.0-dev.1`. Existing output directories, conflicting tags and uncommitted source are rejected; existing release assets are not overwritten.
 
