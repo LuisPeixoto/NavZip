@@ -10,7 +10,7 @@ serde.workspace = true
 serde_json.workspace = true
 url.workspace = true
 tempfile.workspace = true
-wasmi = "0.46"
+wasmi = "2.0"
 zip = { version = "9.0.4", default-features = false, features = ["deflate"] }
 
 [dev-dependencies]
