@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nova aba</title><link rel="icon" type="image/svg+xml" href="icons/navzip.svg"><link rel="stylesheet" href="navzip.css"></head>
+<body>
+  <main class="hero" aria-label="Nova aba NavZip">
+    <time class="clock" id="clock" aria-label="Horário local"></time>
+    <form class="search" id="search" role="search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="7.5"/><path d="m16 16 5 5"/></svg><input id="query" type="text" aria-label="Pesquisar na web ou digitar endereço" placeholder="O que vamos explorar hoje?" autocomplete="off" spellcheck="false"><kbd id="shortcut-key" aria-hidden="true">⌘ K</kbd></form>
+    <nav class="shortcuts" id="shortcuts" aria-label="Seus atalhos"></nav>
+  </main>
+  <footer class="footer"><div class="signature"><img class="brand" src="icons/navzip.svg" alt="NavZip"><span>NavZip</span></div><button class="customize" id="customize"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18M3 12h18M3 19h18"/><circle cx="8" cy="5" r="2" fill="#1b1f22"/><circle cx="16" cy="12" r="2" fill="#1b1f22"/><circle cx="8" cy="19" r="2" fill="#1b1f22"/></svg>Personalizar</button></footer>
+  <output id="status" class="status" role="status"></output>
+  <dialog id="preferences"><form id="preferences-form"><h1>Seu espaço, do seu jeito.</h1><label>Abas e tela dividida</label><div class="layout-actions"><button id="horizontal" type="button" class="ghost">Abas no topo</button><button id="vertical" type="button" class="ghost">Abas na lateral</button><button id="split" type="button" class="ghost">Dividir tela</button></div><label>Atalhos</label><div id="shortcut-settings"></div><p class="error" id="preferences-error" role="alert"></p><div class="actions"><button class="ghost" id="cancel" type="button">Cancelar</button><button class="primary" type="submit">Salvar</button></div></form></dialog>
+  <dialog id="shortcut-dialog"><form id="shortcut-form"><h1>Adicionar atalho</h1><label for="shortcut-title">Nome</label><input id="shortcut-title" type="text" required maxlength="64"><label for="shortcut-url">Endereço</label><input id="shortcut-url" type="url" required placeholder="https://" maxlength="2048"><p class="error" id="shortcut-error" role="alert"></p><div class="actions"><button class="ghost" id="shortcut-cancel" type="button">Cancelar</button><button class="primary" type="submit">Adicionar</button></div></form></dialog>
+  <script type="module" src="navzip_newtab.js"></script>
+</body></html>
