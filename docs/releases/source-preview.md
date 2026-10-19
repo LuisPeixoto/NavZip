@@ -8,6 +8,7 @@ This prerelease makes the Chromium-based NavZip source available in versioned ar
 - Minimal new tab, horizontal/vertical tabs, split views and matching light/dark themes.
 - Rust build, migration, plugin and release-preparation tools.
 - English handbook, screenshots, contribution policies and source/security workflows.
+- Wasmi 0.47.2 in the experimental helper, addressing GHSA-g4v2-cjqp-rfmq.
 - Source archives, `SHA256SUMS` and a machine-readable `release-manifest.json` tied to the source commit and engine pin.
 
 ## Platform availability
