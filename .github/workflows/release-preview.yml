@@ -1,0 +1,52 @@
+name: Source preview release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: Version tag matching Cargo.toml (source archives only)
+        required: true
+        default: v0.2.0-dev.1
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: navzip-release-${{ inputs.tag }}
+  cancel-in-progress: false
+jobs:
+  source:
+    if: github.repository == 'LuisPeixoto/NavZip' && github.ref == 'refs/heads/main'
+    name: Prepare a source-only draft
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: write
+      checks: read
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+      RELEASE_TAG: ${{ inputs.tag }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Require successful source checks on this exact commit
+        run: |
+          result=$(gh api "repos/$GH_REPO/commits/$GITHUB_SHA/check-runs" --jq '[.check_runs[] | select(.name == "Required checks" and .app.id == 15368 and .conclusion == "success")] | length')
+          test "$result" -gt 0
+      - uses: dtolnay/rust-toolchain@683b588c487a69d01f6c6ddf40f036ff682cc2c8 # master
+        with:
+          toolchain: 1.99.1
+      - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: '22'
+      - run: npm run check:repo
+      - run: cargo xtask prepare-release "$RELEASE_TAG"
+      - name: Create a reviewable source-only draft
+        run: |
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Release already exists; no artifacts will be overwritten."
+            exit 1
+          fi
+          gh release create "$RELEASE_TAG" "dist/releases/$RELEASE_TAG/"* --target "$GITHUB_SHA" --draft --prerelease --title "NavZip $RELEASE_TAG — source preview" --notes-file docs/releases/source-preview.md

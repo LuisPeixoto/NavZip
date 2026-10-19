@@ -8,7 +8,7 @@
     <a href="LICENSE"><img alt="License: MPL 2.0" src="https://img.shields.io/badge/license-MPL--2.0-16694a"></a>
     <img alt="Stage: experimental" src="https://img.shields.io/badge/stage-experimental-56645e">
   </p>
-  <p><a href="docs/GETTING_STARTED.md">Get started</a> · <a href="docs/BUILDING.md">Build</a> · <a href="docs/SCREENSHOTS.md">Screenshots</a> · <a href="CONTRIBUTING.md">Contribute</a> · <a href="docs/ROADMAP.md">Roadmap</a></p>
+  <p><a href="https://github.com/LuisPeixoto/NavZip/releases">Releases</a> · <a href="docs/GETTING_STARTED.md">Get started</a> · <a href="docs/BUILDING.md">Build</a> · <a href="docs/SCREENSHOTS.md">Screenshots</a> · <a href="CONTRIBUTING.md">Contribute</a> · <a href="docs/ROADMAP.md">Roadmap</a></p>
 </div>
 
 <picture>
