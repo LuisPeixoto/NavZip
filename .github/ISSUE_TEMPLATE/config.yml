@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and discussion
+    url: https://github.com/LuisPeixoto/NavZip/discussions
+    about: Ask setup questions or discuss ideas before proposing a large change.
+  - name: Report a vulnerability privately
+    url: https://github.com/LuisPeixoto/NavZip/security/advisories/new
+    about: Do not disclose security vulnerabilities or sensitive data in a public issue.

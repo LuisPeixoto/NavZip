@@ -1,0 +1,55 @@
+name: Bug report
+description: Report a reproducible problem in an experimental NavZip build.
+title: 'bug: '
+labels: [bug, needs-triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve NavZip. This project is experimental.
+        For vulnerabilities, use [private reporting](https://github.com/LuisPeixoto/NavZip/security/advisories/new).
+        Do not include credentials or personal browser profiles.
+  - type: checkboxes
+    id: existing
+    attributes:
+      label: Before reporting
+      options:
+        - label: I searched existing issues and checked the current limitations.
+          required: true
+  - type: input
+    id: revision
+    attributes:
+      label: NavZip revision or build
+      placeholder: Git commit, Chromium pin and development/distribution configuration
+    validations:
+      required: true
+  - type: dropdown
+    id: platform
+    attributes:
+      label: Platform
+      options:
+        - macOS Intel
+        - macOS Apple Silicon (unqualified browser target)
+        - Windows x64 (unqualified browser target)
+        - Linux x64 (unqualified browser target)
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      placeholder: Describe a minimal reproduction with a disposable profile.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and actual behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Include redacted logs or screenshots. Identify native app versus component tests.
